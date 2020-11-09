@@ -20,6 +20,6 @@ def init_db():
 ```
 
 1. 데이터베이스에 접속할 engine 객체를 선언한다.
-  1. `echo=True` sqlalchemy가 생성한 query문을 보여준다	
+  1. `echo=True` sqlalchemy가 생성한 query문을 보여준다
 2. 데이터베이스를 조작할 객체를 선언한다.
 

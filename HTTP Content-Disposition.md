@@ -40,6 +40,43 @@ Content-Disposition: form-data; name="field2"; filename="example.file"
 ## 실제로 해보기
 
 ```
+from flask import Flask, send_from_directory
+
+app = Flask(__name__)
+
+
+@app.route('/download/<path:filename>')
+def download_file(filename):
+
+    return send_from_directory(directory='file', filename=filename, as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run()
+```
+
+flask로 간단하게 구현해봤다.
+
+```
+def send_from_directory(directory, filename, **options):
+
+    filename = fspath(filename)
+    directory = fspath(directory)
+    filename = safe_join(directory, filename)
+    if not os.path.isabs(filename):
+        filename = os.path.join(current_app.root_path, filename)
+    try:
+        if not os.path.isfile(filename):
+            raise NotFound()
+    except (TypeError, ValueError):
+        raise BadRequest()
+    options.setdefault("conditional", True)
+    return send_file(filename, **options)
+```
+
+`send_from_direcrory` 함수는 `send_file` 함수를 호출한다. `send_file` 함수로 가봤다.
+
+```
     if as_attachment:
         if attachment_filename is None:
             raise TypeError("filename unavailable, required for sending as attachment")
@@ -61,4 +98,6 @@ Content-Disposition: form-data; name="field2"; filename="example.file"
 
         headers.add("Content-Disposition", "attachment", **filenames)
 ```
+
+`send_file` 함수에서 `as_attachment` 옵션 마지막 줄에서 response header에 `Content-Dispostion: attachment` 값을 주는 것을 볼 수 있었다.
 

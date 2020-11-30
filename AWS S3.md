@@ -38,6 +38,21 @@
            <MaxAgeSeconds>3000</MaxAgeSeconds>
        </CORSRule>
    </CORSConfiguration>
+   
+   [
+       {
+           "AllowedHeaders": [
+               "*"
+           ],
+           "AllowedMethods": [
+               "GET"
+           ],
+           "AllowedOrigins": [
+               "*"
+           ],
+           "MaxAgeSeconds": 3000
+       }
+   ]
    ```
 
 
